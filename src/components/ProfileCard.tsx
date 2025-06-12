@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useCallback, useMemo } from "react";
 import "./ProfileCard.css";
 
@@ -53,7 +52,7 @@ interface ProfileCardProps {
 }
 
 const ProfileCardComponent: React.FC<ProfileCardProps> = ({
-  avatarUrl = "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face",
+  avatarUrl = "/lovable-uploads/7b5854fa-cbde-44ad-bfa4-88055e44d358.png",
   iconUrl,
   grainUrl,
   behindGradient,
@@ -65,7 +64,7 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
   name = "Daniel Samuel",
   title = "Software Developer",
   handle = "danielsamuel",
-  status = "Online",
+  status = "Available for work",
   contactText = "Contact Me",
   showUserInfo = true,
   onContactClick,
@@ -250,8 +249,9 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
         ? (behindGradient ?? DEFAULT_BEHIND_GRADIENT)
         : "none",
       "--inner-gradient": innerGradient ?? DEFAULT_INNER_GRADIENT,
+      "--avatar-url": `url(${avatarUrl})`,
     } as React.CSSProperties),
-    [iconUrl, grainUrl, showBehindGradient, behindGradient, innerGradient]
+    [iconUrl, grainUrl, showBehindGradient, behindGradient, innerGradient, avatarUrl]
   );
 
   const handleContactClick = useCallback(() => {
@@ -266,19 +266,10 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
     >
       <section ref={cardRef} className="pc-card">
         <div className="pc-inside">
+          <div className="pc-avatar-background" />
           <div className="pc-shine" />
           <div className="pc-glare" />
-          <div className="pc-content pc-avatar-content">
-            <img
-              className="avatar"
-              src={avatarUrl}
-              alt={`${name || "User"} avatar`}
-              loading="lazy"
-              onError={(e) => {
-                const target = e.target as HTMLImageElement;
-                target.style.display = "none";
-              }}
-            />
+          <div className="pc-content-overlay">
             {showUserInfo && (
               <div className="pc-user-info">
                 <div className="pc-user-details">
@@ -295,6 +286,7 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
                     />
                   </div>
                   <div className="pc-user-text">
+                    <div className="pc-name">{name}</div>
                     <div className="pc-handle">@{handle}</div>
                     <div className="pc-status">{status}</div>
                   </div>
@@ -310,12 +302,6 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
                 </button>
               </div>
             )}
-          </div>
-          <div className="pc-content">
-            <div className="pc-details">
-              <h3>{name}</h3>
-              <p>{title}</p>
-            </div>
           </div>
         </div>
       </section>
