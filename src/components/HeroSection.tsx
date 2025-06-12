@@ -2,21 +2,30 @@
 import { ArrowRight, Github, Linkedin, Mail } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
+import Aurora from './Aurora';
 
 const HeroSection = () => {
   return (
     <section className="min-h-screen flex items-center justify-center relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-blue-500/10 animate-pulse"></div>
+      {/* Aurora Background */}
+      <div className="absolute inset-0 z-0">
+        <Aurora
+          colorStops={["#3A29FF", "#FF94B4", "#FF3232"]}
+          blend={0.3}
+          amplitude={1.2}
+          speed={0.3}
+        />
+      </div>
       
-      {/* Animated background elements */}
-      <div className="absolute bottom-0 left-0 right-0 h-96 bg-gradient-to-t from-primary/20 to-transparent opacity-50 rounded-t-full transform scale-150 animate-pulse"></div>
+      {/* Gradient overlay for better text readability */}
+      <div className="absolute inset-0 bg-gradient-to-br from-background/80 via-background/60 to-background/80 z-10"></div>
       
       {/* Floating elements */}
-      <div className="absolute top-20 left-10 w-4 h-4 bg-primary/30 rounded-full animate-bounce delay-1000"></div>
-      <div className="absolute top-40 right-20 w-6 h-6 bg-blue-500/30 rounded-full animate-bounce delay-2000"></div>
-      <div className="absolute bottom-40 left-20 w-3 h-3 bg-purple-500/30 rounded-full animate-bounce delay-3000"></div>
+      <div className="absolute top-20 left-10 w-4 h-4 bg-primary/30 rounded-full animate-bounce delay-1000 z-20"></div>
+      <div className="absolute top-40 right-20 w-6 h-6 bg-blue-500/30 rounded-full animate-bounce delay-2000 z-20"></div>
+      <div className="absolute bottom-40 left-20 w-3 h-3 bg-purple-500/30 rounded-full animate-bounce delay-3000 z-20"></div>
       
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-30">
         <div className="text-center space-y-8">
           <div className="space-y-4">
             <p className="text-lg text-muted-foreground animate-fade-in opacity-0 animation-delay-300">
