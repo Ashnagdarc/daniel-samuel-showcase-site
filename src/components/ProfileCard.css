@@ -1,0 +1,212 @@
+
+:root {
+  --pointer-x: 50%;
+  --pointer-y: 50%;
+  --pointer-from-center: 0;
+  --pointer-from-top: 0.5;
+  --pointer-from-left: 0.5;
+  --card-opacity: 0;
+  --rotate-x: 0deg;
+  --rotate-y: 0deg;
+  --background-x: 50%;
+  --background-y: 50%;
+  --grain: none;
+  --icon: none;
+  --behind-gradient: none;
+  --inner-gradient: none;
+  --sunpillar-1: hsl(2, 100%, 73%);
+  --sunpillar-2: hsl(53, 100%, 69%);
+  --sunpillar-3: hsl(93, 100%, 69%);
+  --sunpillar-4: hsl(176, 100%, 76%);
+  --sunpillar-5: hsl(228, 100%, 74%);
+  --sunpillar-6: hsl(283, 100%, 73%);
+  --sunpillar-clr-1: var(--sunpillar-1);
+  --sunpillar-clr-2: var(--sunpillar-2);
+  --sunpillar-clr-3: var(--sunpillar-3);
+  --sunpillar-clr-4: var(--sunpillar-4);
+  --sunpillar-clr-5: var(--sunpillar-5);
+  --sunpillar-clr-6: var(--sunpillar-6);
+  --card-radius: 30px;
+}
+
+.pc-card-wrapper {
+  perspective: 1000px;
+  width: 320px;
+  height: 480px;
+  margin: 0 auto;
+}
+
+.pc-card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--card-radius);
+  transform-style: preserve-3d;
+  transform: rotateX(var(--rotate-x)) rotateY(var(--rotate-y));
+  transition: transform 0.1s ease-out;
+  cursor: pointer;
+}
+
+.pc-card.active {
+  --card-opacity: 1;
+}
+
+.pc-card-wrapper.active {
+  --card-opacity: 1;
+}
+
+.pc-inside {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--card-radius);
+  overflow: hidden;
+  background: var(--inner-gradient);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.pc-inside::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--behind-gradient);
+  opacity: var(--card-opacity);
+  z-index: -1;
+  transition: opacity 0.3s ease;
+}
+
+.pc-shine {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    600px circle at var(--pointer-x) var(--pointer-y),
+    rgba(255, 255, 255, 0.1),
+    transparent 40%
+  );
+  opacity: var(--card-opacity);
+  transition: opacity 0.3s ease;
+}
+
+.pc-glare {
+  position: absolute;
+  inset: 0;
+  background: conic-gradient(
+    from 180deg at 50% 70%,
+    hsla(0, 0%, 98%, 0) 0deg,
+    hsla(0, 0%, 98%, 0.3) 90deg,
+    hsla(0, 0%, 98%, 0) 180deg
+  );
+  mix-blend-mode: overlay;
+  opacity: calc(var(--card-opacity) * 0.5);
+  transition: opacity 0.3s ease;
+}
+
+.pc-content {
+  position: relative;
+  z-index: 10;
+  padding: 2rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.pc-avatar-content {
+  justify-content: flex-start;
+  align-items: center;
+  text-align: center;
+}
+
+.avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid rgba(255, 255, 255, 0.2);
+  margin-bottom: 1rem;
+}
+
+.pc-details {
+  margin-top: auto;
+}
+
+.pc-details h3 {
+  color: white;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.pc-details p {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1rem;
+}
+
+.pc-user-info {
+  position: absolute;
+  bottom: 2rem;
+  left: 2rem;
+  right: 2rem;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.pc-user-details {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.pc-mini-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.pc-mini-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pc-user-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.pc-handle {
+  color: white;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.pc-status {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.75rem;
+}
+
+.pc-contact-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(10px);
+}
+
+.pc-contact-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.3);
+}

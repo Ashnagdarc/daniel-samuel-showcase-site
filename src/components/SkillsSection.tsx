@@ -1,14 +1,9 @@
 
-import { Card } from '@/components/ui/card';
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
+import { useEffect, useRef } from 'react';
 
 const SkillsSection = () => {
+  const scrollRef = useRef<HTMLDivElement>(null);
+
   const skills = [
     { name: 'React', icon: '⚛️' },
     { name: 'TypeScript', icon: '📘' },
@@ -24,6 +19,47 @@ const SkillsSection = () => {
     { name: 'Bash', icon: '💻' },
   ];
 
+  // Duplicate skills for infinite scroll
+  const duplicatedSkills = [...skills, ...skills, ...skills];
+
+  useEffect(() => {
+    const scrollContainer = scrollRef.current;
+    if (!scrollContainer) return;
+
+    let animationId: number;
+    let scrollPosition = 0;
+    const scrollSpeed = 0.5;
+
+    const animate = () => {
+      scrollPosition += scrollSpeed;
+      
+      // Reset position when we've scrolled through one complete set
+      if (scrollPosition >= scrollContainer.scrollWidth / 3) {
+        scrollPosition = 0;
+      }
+      
+      scrollContainer.scrollLeft = scrollPosition;
+      animationId = requestAnimationFrame(animate);
+    };
+
+    animationId = requestAnimationFrame(animate);
+
+    // Pause animation on hover
+    const handleMouseEnter = () => cancelAnimationFrame(animationId);
+    const handleMouseLeave = () => {
+      animationId = requestAnimationFrame(animate);
+    };
+
+    scrollContainer.addEventListener('mouseenter', handleMouseEnter);
+    scrollContainer.addEventListener('mouseleave', handleMouseLeave);
+
+    return () => {
+      cancelAnimationFrame(animationId);
+      scrollContainer.removeEventListener('mouseenter', handleMouseEnter);
+      scrollContainer.removeEventListener('mouseleave', handleMouseLeave);
+    };
+  }, []);
+
   return (
     <section className="py-20 px-4 sm:px-6 lg:px-8 animate-fade-in">
       <div className="max-w-7xl mx-auto">
@@ -36,36 +72,26 @@ const SkillsSection = () => {
           </p>
         </div>
 
-        <div className="relative px-12 animate-slide-in-right">
-          <Carousel
-            opts={{
-              align: "start",
-              loop: true,
-            }}
-            className="w-full"
+        <div className="overflow-hidden mask-gradient">
+          <div
+            ref={scrollRef}
+            className="flex gap-6 overflow-x-hidden"
+            style={{ width: 'fit-content' }}
           >
-            <CarouselContent className="-ml-2 md:-ml-4">
-              {skills.map((skill, index) => (
-                <CarouselItem key={skill.name} className="pl-2 md:pl-4 basis-1/2 md:basis-1/3 lg:basis-1/4">
-                  <Card
-                    className="p-6 text-center hover:scale-105 transition-all duration-300 bg-card/50 backdrop-blur-sm border-border/50 hover:glow group cursor-pointer"
-                    style={{
-                      animationDelay: `${index * 100}ms`
-                    }}
-                  >
-                    <div className="text-4xl mb-4 group-hover:scale-110 transition-transform duration-200">
-                      {skill.icon}
-                    </div>
-                    <h3 className="font-semibold group-hover:text-primary transition-colors duration-200">
-                      {skill.name}
-                    </h3>
-                  </Card>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <CarouselPrevious className="hover:scale-110 transition-transform duration-200" />
-            <CarouselNext className="hover:scale-110 transition-transform duration-200" />
-          </Carousel>
+            {duplicatedSkills.map((skill, index) => (
+              <div
+                key={`${skill.name}-${index}`}
+                className="flex-shrink-0 w-48 p-6 text-center bg-card/50 backdrop-blur-sm border border-border/50 rounded-lg hover:bg-card/70 hover:scale-105 transition-all duration-300 group cursor-pointer"
+              >
+                <div className="text-4xl mb-4 group-hover:scale-110 transition-transform duration-200">
+                  {skill.icon}
+                </div>
+                <h3 className="font-semibold group-hover:text-primary transition-colors duration-200">
+                  {skill.name}
+                </h3>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

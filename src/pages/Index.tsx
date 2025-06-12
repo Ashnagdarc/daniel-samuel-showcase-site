@@ -1,6 +1,7 @@
 
 import Navigation from '@/components/Navigation';
 import HeroSection from '@/components/HeroSection';
+import WhatIDoSection from '@/components/WhatIDoSection';
 import SkillsSection from '@/components/SkillsSection';
 
 const Index = () => {
@@ -9,6 +10,7 @@ const Index = () => {
       <Navigation />
       <main className="animate-fade-in">
         <HeroSection />
+        <WhatIDoSection />
         <SkillsSection />
       </main>
     </div>
