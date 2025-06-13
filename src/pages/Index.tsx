@@ -1,17 +1,25 @@
 
 import Navigation from '@/components/Navigation';
 import HeroSection from '@/components/HeroSection';
-import WhatIDoSection from '@/components/WhatIDoSection';
+import StatsSection from '@/components/StatsSection';
+import ServicesSection from '@/components/ServicesSection';
 import SkillsSection from '@/components/SkillsSection';
+import TestimonialsSection from '@/components/TestimonialsSection';
+import ContactSection from '@/components/ContactSection';
 
 const Index = () => {
   return (
-    <div className="min-h-screen overflow-hidden">
+    <div className="min-h-screen overflow-hidden bg-background">
       <Navigation />
-      <main className="animate-fade-in">
+      <main>
         <HeroSection />
-        <WhatIDoSection />
+        <StatsSection />
+        <ServicesSection />
         <SkillsSection />
+        <TestimonialsSection />
+        <div id="contact">
+          <ContactSection />
+        </div>
       </main>
     </div>
   );
